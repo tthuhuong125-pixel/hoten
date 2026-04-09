@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiểm tra mật khẩu</title>
+</head>
+<body>
+    <h1>Bài tập kiểm tra độ mạnh mật khẩu</h1>
+    <p>Kết quả kiểm tra sẽ hiển thị qua hộp thoại (alert).</p>
+
+    <script>
+        function validatePassword() {
+            let password = "";
+            let isValid = false;
+
+            while (!isValid) {
+                password = prompt("Vui lòng nhập mật khẩu của bạn:");
+
+                // Nếu người dùng nhấn Cancel
+                if (password === null) {
+                    alert("Bạn đã hủy thao tác.");
+                    break;
+                }
+
+                let errors = [];
+
+                // 1. Kiểm tra ít nhất 8 ký tự
+                if (password.length < 8) {
+                    errors.push("- Ít nhất 8 ký tự.");
+                }
+
+                // 2. Kiểm tra chữ hoa
+                if (!/[A-Z]/.test(password)) {
+                    errors.push("- Chứa ít nhất một chữ cái viết hoa (A-Z).");
+                }
+
+                // 3. Kiểm tra chữ thường
+                if (!/[a-z]/.test(password)) {
+                    errors.push("- Chứa ít nhất một chữ cái viết thường (a-z).");
+                }
+
+                // 4. Kiểm tra chữ số
+                if (!/[0-9]/.test(password)) {
+                    errors.push("- Chứa ít nhất một chữ số (0-9).");
+                }
+
+                // 5. Kiểm tra ký tự đặc biệt
+                if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                    errors.push("- Chứa ít nhất một ký tự đặc biệt (@, #, $, %...).");
+                }
+
+                if (errors.length > 0) {
+                    alert("Mật khẩu không hợp lệ:\n" + errors.join("\n") + "\nVui lòng nhập lại!");
+                } else {
+                    // Nếu hợp lệ, kiểm tra độ mạnh
+                    isValid = true;
+                    let strength = "";
+                    let len = password.length;
+
+                    if (len === 8) {
+                        strength = "Yếu";
+                    } else if (len < 12) {
+                        strength = "Trung bình";
+                    } else {
+                        strength = "Mạnh";
+                    }
+
+                    alert("Mật khẩu hợp lệ!\nĐộ mạnh: " + strength);
+                }
+            }
+        }
+
+        // Gọi hàm thực hiện ngay khi trang web load
+        validatePassword();
+    </script>
+</body>
+</html>
